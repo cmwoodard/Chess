@@ -54,7 +54,9 @@ class Game
 				print "#{x}| "
 				@board[x].each{|y|
 					if y.occupied_by != nil
-					print  y.occupied_by.class.to_s[0], " "
+						print  y.occupied_by.class.to_s[0], " "
+					else
+						print "  "
 					end
 				}
 				print "\n"
@@ -70,13 +72,24 @@ class Game
 		fx = final[0]
 		fy = final[1].to_i
 		
+		start_sq = nil
+		final_sq = nil
 		
-		@board[py].each{|sq| 
-			if sq.x == px
+		@board[sy].each{|sq| 
+			if sq.x == sx
 				start_sq = sq
 			end
 		}
-		gets
+		@board[fy].each_with_index{|sq, ind| 
+			if sq.x == fx
+				@board[fy][ind].occupied_by = start_sq.occupied_by
+				@board[sy].each_with_index{|sq, ind| 
+					if sq.x == sx
+						@board[sy][ind].occupied_by = nil
+					end
+		}
+			end
+		}
 	end
 	
 end
