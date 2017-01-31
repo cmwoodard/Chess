@@ -78,8 +78,11 @@ class Game
 		@board[sy].each{|sq| 
 			if sq.x == sx
 				start_sq = sq
+				
 			end
 		}
+		puts start_sq.occupied_by.legal_moves
+			gets
 		@board[fy].each_with_index{|sq, ind| 
 			if sq.x == fx
 				@board[fy][ind].occupied_by = start_sq.occupied_by
@@ -90,6 +93,7 @@ class Game
 		}
 			end
 		}
+		
 	end
 	
 end
@@ -113,9 +117,12 @@ class Piece
 end
 
 class Pawn < Piece
+	attr_accessor :legal_moves
 	def initialize(location, color)
 		super(location, color)
+		@legal_moves = ["whatever"]
 	end
+	
 end
 
  class Rook < Piece
