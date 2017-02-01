@@ -170,6 +170,7 @@ end
  attr_accessor :legal_moves
 	def initialize(location, color, board)
 		super(location, color, board)
+		@legal_moves = [[@x, @y+1],[@x, @y+2]]
 	end
 	
 	def get_moves
