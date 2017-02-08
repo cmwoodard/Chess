@@ -91,6 +91,7 @@ class Game
 			@board[fx][fy].set_location([fx, fy])			
 			@board[sx][sy] = nil
 		else
+			@board[sx][sy].get_moves
 			puts "invalid move"
 		end
 		gets
@@ -100,7 +101,7 @@ end
 
 
 class Piece
-	attr_accessor :name, :location, :color
+	attr_accessor :name, :location, :color, :x, :y
 	def initialize(location, color, board)
 		@location = location
 		@color = color
@@ -170,9 +171,53 @@ end
  attr_accessor :legal_moves
 	def initialize(location, color, board)
 		super(location, color, board)
+		@legal_moves = []
 	end
 	
 	def get_moves
+		count = 1
+		cx = @x
+		cy = @y		
+		@legal_moves = []
+		
+		current = @board[cx][cy+count]
+		while current == nil	&& (cy+count) <= 7		
+			@legal_moves.push([@x, @y+count])			
+			count +=1
+			current = @board[cx][cy+count]
+		end
+		
+		count = 1		
+		current = @board[cx][cy-count]		
+		while current == nil && (cy-count) >= 0
+			@legal_moves.push([@x, @y-count])			
+			count +=1
+			current = @board[cx][cy-count]			
+		end
+		
+		count = 1
+		if cx-count >=0
+			current = @board[cx-count][cy]		
+			while current == nil && (cx-count) >= 1
+				@legal_moves.push([@x-count, @y])			
+				count +=1
+				current = @board[cx-count][cy]			
+			end
+			@legal_moves.push([@x-count, @y])
+		end
+		
+		count = 1		
+		if cx+count <=7
+			current = @board[cx+count][cy]			
+			while current == nil && (cx+count) <= 6
+				@legal_moves.push([@x+count, @y])		
+				count +=1
+				current = @board[cx+count][cy]
+				print @legal_moves
+			end
+			@legal_moves.push([@x+count, @y])		
+		end
+		
 	end
  end
 
